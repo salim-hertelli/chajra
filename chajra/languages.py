@@ -1,7 +1,7 @@
 from pydantic import BaseModel, ConfigDict, ValidationError
 from typing import List
-import json
-import os
+from chajra.extensions import extensions_db
+import logging
 
 class Language(BaseModel):
     model_config = ConfigDict(strict=True)
@@ -10,10 +10,11 @@ class Language(BaseModel):
     type: str
     extensions: List[str] = []
 
-ALL = []
-with open(os.path.join(os.path.dirname(__file__), "extensions.json"), "r") as f:
-    ALL = json.load(f)
-    ALL = list(map(Language.model_validate, ALL))
+try:
+    ALL = list(map(Language.model_validate, extensions_db))
+except ValidationError as ve:
+    logging.critical("Internal Error: Invalid extensions list.")
+    exit(1)
 
 _supported_languages = [l.name for l in ALL]
 

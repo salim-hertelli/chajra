@@ -1,4 +1,4 @@
-[
+extensions_db = [
    {
       "name":"ABAP",
       "type":"programming",

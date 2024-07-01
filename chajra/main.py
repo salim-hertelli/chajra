@@ -1,6 +1,6 @@
 import os
-import model
-import languages
+import chajra.model as model
+import chajra.languages as languages
 from typing import List
 
 def group_files_by_extension(files: List[model.File]):
@@ -14,7 +14,7 @@ def group_files_by_extension(files: List[model.File]):
         ans[ext].append(f)
     return ans
 
-if __name__ == "__main__":
+def main():
     current_dir = os.getcwd()
     print(f"Current directory: {current_dir}")
 
@@ -51,3 +51,6 @@ if __name__ == "__main__":
     results = {ext: r for ext, r in results.items() if r.lines > 0}
     for ext, r in results.items():
         print(ext, r)
+
+if __name__ == "__main__":
+    main()
